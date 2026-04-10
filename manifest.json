@@ -1,0 +1,10 @@
+{
+  "name": "MVT Fitness",
+  "short_name": "MVT",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f4f1ea",
+  "theme_color": "#0f172a",
+  "description": "A mobile-first coaching dashboard for trainers and clients.",
+  "icons": []
+}

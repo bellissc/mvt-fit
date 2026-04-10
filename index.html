@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f172a">
+  <title>MVT Fitness</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Mobile + Web Coaching MVP</p>
+        <h1>MVT Fitness</h1>
+      </div>
+      <div class="topbar-actions">
+        <span id="deviceBadge" class="session-badge">Desktop</span>
+        <span id="sessionBadge" class="session-badge">Signed out</span>
+        <button id="resetBtn" class="ghost-button" type="button">Reset demo data</button>
+        <button id="logoutBtn" class="ghost-button hidden" type="button">Logout</button>
+      </div>
+    </header>
+
+    <main class="page-grid">
+      <section id="authView" class="panel auth-panel">
+        <div class="auth-copy">
+          <p class="eyebrow">Built for one coach managing up to 50 clients</p>
+          <h2>Test the trainer and client experience from one browser.</h2>
+          <p>
+            This prototype runs without a backend so you can validate the workflow first.
+            It stores demo data in your browser and supports desktop and mobile layouts.
+          </p>
+          <div class="callout">
+            <p class="callout-title">Demo logins</p>
+            <p><strong>Trainer:</strong> `coach@coachflow.test` / `demo123`</p>
+            <p><strong>Client:</strong> `alex@coachflow.test` / `demo123`</p>
+          </div>
+        </div>
+
+        <form id="loginForm" class="auth-form">
+          <label>
+            Email
+            <input id="emailInput" name="email" type="email" value="coach@coachflow.test" required>
+          </label>
+          <label>
+            Password
+            <input id="passwordInput" name="password" type="password" value="demo123" required>
+          </label>
+          <button class="primary-button" type="submit">Sign In</button>
+          <p id="loginMessage" class="form-message" aria-live="polite"></p>
+        </form>
+
+        <form id="inviteAccessForm" class="auth-form hidden">
+          <label>
+            Invite code
+            <input id="inviteCodeInput" name="inviteCode" type="text" placeholder="Enter the invite code from your email">
+          </label>
+          <button class="ghost-button" type="submit">Open intake form</button>
+          <p id="inviteMessage" class="form-message" aria-live="polite"></p>
+        </form>
+
+        <form id="intakeForm" class="auth-form hidden">
+          <p class="eyebrow">Client intake</p>
+          <h3 id="intakeHeading">Complete your profile</h3>
+          <label>
+            Full name
+            <input id="intakeName" type="text" required>
+          </label>
+          <label>
+            Sex
+            <select id="intakeSex">
+              <option>Female</option>
+              <option>Male</option>
+            </select>
+          </label>
+          <label>
+            Current weight (lb)
+            <input id="intakeWeight" type="number" min="0" step="0.1" required>
+          </label>
+          <label>
+            Goal weight (lb)
+            <input id="intakeGoalWeight" type="number" min="0" step="0.1">
+          </label>
+          <label>
+            Allergies
+            <textarea id="intakeAllergies" rows="2" placeholder="Food, medication, or environmental allergies"></textarea>
+          </label>
+          <label>
+            Injuries or limitations
+            <textarea id="intakeInjuries" rows="2" placeholder="Past injuries, pain, surgeries, movement limits"></textarea>
+          </label>
+          <label>
+            Goals
+            <textarea id="intakeGoals" rows="2" placeholder="Weight loss, muscle gain, strength, energy, consistency"></textarea>
+          </label>
+          <label>
+            Trainer notes
+            <textarea id="intakeNotes" rows="3" placeholder="Anything else your trainer should know"></textarea>
+          </label>
+          <label>
+            Create password
+            <input id="intakePassword" type="password" required>
+          </label>
+          <button class="primary-button" type="submit">Submit intake</button>
+          <p id="intakeMessage" class="form-message" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section id="trainerView" class="hidden">
+        <div id="trainerRosterPage" class="trainer-layout">
+          <section class="panel hero-panel">
+            <div>
+              <p class="eyebrow">Trainer Workspace</p>
+              <h2>Run your client roster from one dashboard.</h2>
+              <p>Review adherence, adjust meal plans, and assign today's training from phone or desktop.</p>
+            </div>
+            <div class="hero-stats" id="trainerStats"></div>
+          </section>
+
+          <section class="panel roster-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Clients</p>
+                <h3>Client roster</h3>
+              </div>
+              <div class="roster-actions">
+                <input id="clientSearch" class="compact-input" type="search" placeholder="Search clients">
+                <button id="toggleInviteBtn" class="primary-button" type="button">Invite client</button>
+              </div>
+            </div>
+            <div id="inviteComposer" class="invite-composer hidden">
+              <form id="inviteClientForm" class="progress-form">
+                <div class="invite-grid">
+                  <label>
+                    Client name
+                    <input id="inviteClientName" type="text" placeholder="e.g. Sam Taylor" required>
+                  </label>
+                  <label>
+                    Client email
+                    <input id="inviteClientEmail" type="email" placeholder="sam@example.com" required>
+                  </label>
+                </div>
+                <div class="inline-actions">
+                  <button class="primary-button" type="submit">Create invite</button>
+                  <button id="cancelInviteBtn" class="ghost-button" type="button">Cancel</button>
+                </div>
+                <p id="inviteClientMessage" class="form-message" aria-live="polite"></p>
+              </form>
+              <div id="inviteList" class="stack-list top-gap"></div>
+            </div>
+            <div class="client-table">
+              <div class="client-table-head">
+                <span>Client</span>
+                <span>Email</span>
+                <span>Status</span>
+                <span>Goal</span>
+                <span>Plan</span>
+                <span>Actions</span>
+              </div>
+              <div id="trainerClientList" class="client-table-body"></div>
+            </div>
+          </section>
+        </div>
+
+        <div id="trainerDetailPage" class="trainer-layout hidden">
+          <section class="panel detail-page-header">
+            <div class="panel-heading">
+              <div class="inline-actions">
+                <button id="backToRosterBtn" class="ghost-button" type="button">Back to clients</button>
+              </div>
+            </div>
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Selected client</p>
+                <h3 id="selectedClientName">Choose a client</h3>
+              </div>
+              <span id="selectedClientStatus" class="status-pill">Waiting</span>
+            </div>
+            <div id="trainerClientDetail" class="detail-grid empty-state">
+              Select a client to manage workouts, meals, and progress.
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="clientView" class="hidden">
+        <div class="dashboard-grid">
+          <section class="panel hero-panel">
+            <div>
+              <p class="eyebrow">Client Dashboard</p>
+              <h2 id="clientGreeting">Today's training, meals, and progress.</h2>
+              <p>Complete your assigned workout, review your nutrition plan, and log how you feel.</p>
+            </div>
+            <div id="clientSummary" class="hero-stats"></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Updates</p>
+                <h3>Notifications</h3>
+              </div>
+            </div>
+            <div id="clientNotifications" class="stack-list"></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Today</p>
+                <h3>Workout checklist</h3>
+              </div>
+            </div>
+            <div id="clientWorkoutList" class="stack-list"></div>
+          </section>
+
+          <section class="panel split-panel">
+            <div>
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">Nutrition</p>
+                  <h3>Meal catalog</h3>
+                </div>
+              </div>
+              <div id="clientMealPlan" class="meal-plan"></div>
+            </div>
+
+            <div>
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">Check-in</p>
+                  <h3>Daily progress log</h3>
+                </div>
+              </div>
+              <form id="progressForm" class="progress-form">
+                <label>
+                  Update type
+                  <select id="progressTypeInput">
+                    <option value="text">Typed update</option>
+                    <option value="video">Video update</option>
+                  </select>
+                </label>
+                <label>
+                  Body weight
+                  <input id="bodyWeightInput" type="number" min="0" step="0.1" placeholder="e.g. 182.4">
+                </label>
+                <label id="videoLinkField" class="hidden">
+                  Video link
+                  <input id="videoLinkInput" type="url" placeholder="Paste Loom, YouTube, or Drive link">
+                </label>
+                <label>
+                  Energy
+                  <select id="energyInput">
+                    <option>High</option>
+                    <option selected>Medium</option>
+                    <option>Low</option>
+                  </select>
+                </label>
+                <label>
+                  Notes
+                  <textarea id="notesInput" rows="4" placeholder="How did the session feel?"></textarea>
+                </label>
+                <button class="primary-button" type="submit">Save progress</button>
+                <p id="progressMessage" class="form-message" aria-live="polite"></p>
+              </form>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">History</p>
+                <h3>Recent logs</h3>
+              </div>
+            </div>
+            <div id="progressHistory" class="stack-list"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="exerciseMediaDialog" class="media-dialog">
+    <div class="media-dialog-body">
+      <div id="exerciseMediaPreview" class="media-preview"></div>
+      <div class="media-copy">
+        <p class="eyebrow">Exercise Demo</p>
+        <h3 id="exerciseMediaTitle">Exercise</h3>
+        <p id="exerciseMediaDescription" class="muted"></p>
+        <div class="inline-actions">
+          <button id="closeMediaDialogBtn" class="ghost-button" type="button">Close</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
