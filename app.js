@@ -1032,18 +1032,12 @@ function renderSelectedClientDetail() {
         </div>
         <button class="primary-button" type="button" onclick="submitMealPlan('${client.id}')">Submit meal plan to ${client.firstName}</button>
       </div>
-      <div class="builder-section">
-      <p class="section-label">Macro Calculator</p>
-      <div class="nutrition-summary">
-        <div class="nutrition-card"><span>Calories</span><strong id="macroCaloriesValue">${Math.round(profile?.calorieTarget || 0)}</strong></div>
-        <div class="nutrition-card"><span>Protein</span><strong id="macroProteinValue">${Math.round(profile?.proteinTarget || 0)}g</strong></div>
-        <div class="nutrition-card"><span>Carbs</span><strong id="macroCarbValue">${Math.round(profile?.carbTarget || 0)}g</strong></div>
-        <div class="nutrition-card"><span>Fat</span><strong id="macroFatValue">${Math.round(profile?.fatTarget || 0)}g</strong></div>
-      </div>
-      <form class="progress-form" onsubmit="event.preventDefault();">
-        <div class="nutrition-grid">
-          <label>
-            Age
+        <div class="builder-section">
+        <p class="section-label">Macro Calculator</p>
+        <form class="progress-form" onsubmit="event.preventDefault();">
+          <div class="nutrition-grid">
+            <label>
+              Age
             <input id="macroAge" type="number" min="10" max="100" value="${profile?.age || ""}" oninput="handleMacroInput('${client.id}', 'macroAge')">
           </label>
           <label>
@@ -1075,12 +1069,18 @@ function renderSelectedClientDetail() {
               <option ${profile?.goalType === "Fat loss" ? "selected" : ""}>Fat loss</option>
               <option ${profile?.goalType === "Maintenance" ? "selected" : ""}>Maintenance</option>
               <option ${profile?.goalType === "Muscle gain" ? "selected" : ""}>Muscle gain</option>
-            </select>
-          </label>
+              </select>
+            </label>
+          </div>
+          <div class="nutrition-summary top-gap">
+            <div class="nutrition-card"><span>Calories</span><strong id="macroCaloriesValue">${Math.round(profile?.calorieTarget || 0)}</strong></div>
+            <div class="nutrition-card"><span>Protein</span><strong id="macroProteinValue">${Math.round(profile?.proteinTarget || 0)}g</strong></div>
+            <div class="nutrition-card"><span>Carbs</span><strong id="macroCarbValue">${Math.round(profile?.carbTarget || 0)}g</strong></div>
+            <div class="nutrition-card"><span>Fat</span><strong id="macroFatValue">${Math.round(profile?.fatTarget || 0)}g</strong></div>
+          </div>
+          <p id="macroMessage" class="form-message" aria-live="polite"></p>
+        </form>
         </div>
-        <p id="macroMessage" class="form-message" aria-live="polite"></p>
-      </form>
-      </div>
       <div class="builder-section top-gap">
       <p class="section-label">Food Search And Meal Builder</p>
       <form class="progress-form" onsubmit="event.preventDefault(); addMealCatalogItem('${client.id}');">

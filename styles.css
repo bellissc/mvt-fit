@@ -771,7 +771,8 @@ button {
 }
 
 .chart-point-group:hover .chart-tooltip,
-.chart-point-group:focus-visible .chart-tooltip {
+.chart-point-group:focus-visible .chart-tooltip,
+.chart-point-group:active .chart-tooltip {
   opacity: 1;
 }
 
@@ -882,5 +883,23 @@ button {
   .history-head {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .chart-shell {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .progress-chart,
+  .chart-labels {
+    min-width: 640px;
+  }
+
+  .chart-labels {
+    gap: 0.35rem;
+  }
+
+  .chart-labels span {
+    font-size: 0.62rem;
   }
 }
