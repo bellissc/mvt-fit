@@ -1035,7 +1035,7 @@ function renderSelectedClientDetail() {
         <div class="builder-section">
         <p class="section-label">Macro Calculator</p>
         <form class="progress-form" onsubmit="event.preventDefault();">
-          <div class="nutrition-grid">
+          <div class="nutrition-grid macro-input-grid">
             <label>
               Age
             <input id="macroAge" type="number" min="10" max="100" value="${profile?.age || ""}" oninput="handleMacroInput('${client.id}', 'macroAge')">
@@ -1072,7 +1072,7 @@ function renderSelectedClientDetail() {
               </select>
             </label>
           </div>
-          <div class="nutrition-summary top-gap">
+          <div class="nutrition-summary top-gap macro-output-summary">
             <div class="nutrition-card"><span>Calories</span><strong id="macroCaloriesValue">${Math.round(profile?.calorieTarget || 0)}</strong></div>
             <div class="nutrition-card"><span>Protein</span><strong id="macroProteinValue">${Math.round(profile?.proteinTarget || 0)}g</strong></div>
             <div class="nutrition-card"><span>Carbs</span><strong id="macroCarbValue">${Math.round(profile?.carbTarget || 0)}g</strong></div>

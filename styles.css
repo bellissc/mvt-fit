@@ -902,4 +902,17 @@ button {
   .chart-labels span {
     font-size: 0.62rem;
   }
+
+  .progress-form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .macro-input-grid {
+    order: 1;
+  }
+
+  .macro-output-summary {
+    order: 2;
+  }
 }
