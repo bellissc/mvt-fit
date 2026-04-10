@@ -1671,11 +1671,14 @@ function calculateMacros(clientId) {
 
 function handleMacroInput(clientId, elementId) {
   const input = document.getElementById(elementId);
-  queueFocusRestore(
-    elementId,
-    input && typeof input.selectionStart === "number" ? input.selectionStart : null,
-    input && typeof input.selectionEnd === "number" ? input.selectionEnd : null
-  );
+  const isTextLikeInput = input && typeof input.selectionStart === "number" && typeof input.selectionEnd === "number";
+  if (isTextLikeInput) {
+    queueFocusRestore(
+      elementId,
+      input.selectionStart,
+      input.selectionEnd
+    );
+  }
   calculateMacros(clientId);
 }
 
